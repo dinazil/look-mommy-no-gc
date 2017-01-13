@@ -4,15 +4,15 @@ namespace TasksAndState
 {
     class Helper
     {
-        public void foo() { }
+        public void Foo() { }
     }
 
     class LambdaCompilation
     {
-        private void goo()
+        private void Goo()
         {
             var h = new Helper();
-            Action f = () => h.foo();
+            Action f = () => h.Foo();
             f();
         }
     }

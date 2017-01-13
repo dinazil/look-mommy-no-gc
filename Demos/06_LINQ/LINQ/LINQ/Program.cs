@@ -7,8 +7,8 @@ namespace LINQ
 {
     public class Test
     {
-        private const int Minimum = 1000;
-        private const int Maximum = 9999 + 1;
+        private const int Minimum = 10000;
+        private const int Maximum = 99999 + 1;
 
         // Find average number of unique digits in numbers between Minimum and Maximum
 

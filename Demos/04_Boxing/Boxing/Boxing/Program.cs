@@ -64,13 +64,13 @@ namespace Boxing
             return enumbers.Contains(enumbers.Last());
         }
 
-        //[Benchmark]
+        [Benchmark]
         public bool SearchCNumbers()
         {
             return cnumbers.Contains(cnumbers.Last());
         }
 
-        //[Benchmark]
+        [Benchmark]
         public bool SearchCENumbers()
         {
             return cenumbers.Contains(cenumbers.Last());
