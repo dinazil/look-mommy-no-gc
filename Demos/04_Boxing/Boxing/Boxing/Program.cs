@@ -1,36 +1,68 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 
 namespace Boxing
 {
-    struct Number
+    struct Struct
     {
         public int Value { get; set; }
     }
 
-    struct ENumber : IEquatable<ENumber>
+    struct StructWithSpecializedEquals
     {
         public int Value { get; set; }
-        public bool Equals(ENumber other)
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(obj, null)) return false;
+            if (obj.GetType() != typeof(StructWithSpecializedEquals))
+            {
+                return false;
+            }
+
+            return ((StructWithSpecializedEquals)obj).Value == Value;
+        }
+    }
+
+    struct StructEquatable : IEquatable<StructEquatable>
+    {
+        public int Value { get; set; }
+
+        public bool Equals(StructEquatable other)
         {
             return Value == other.Value;
         }
     }
 
-    class CNumber
+    class Class
     {
         public int Value { get; set; }
     }
 
-    class CENumber : IEquatable<CENumber>
+    class ClassWithSpecializedEquals
     {
         public int Value { get; set; }
-        public bool Equals(CENumber other)
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(obj, null)) return false;
+            if (obj.GetType() != typeof(ClassWithSpecializedEquals))
+            {
+                return false;
+            }
+
+            return ((ClassWithSpecializedEquals)obj).Value == Value;
+        }
+    }
+
+    class ClassEquatable : IEquatable<ClassEquatable>
+    {
+        public int Value { get; set; }
+
+        public bool Equals(ClassEquatable other)
         {
             return Value == other.Value;
         }
@@ -38,42 +70,61 @@ namespace Boxing
 
     public class Test
     {
-        private const int N = 1000000;
-        private readonly List<Number> numbers;
-        private readonly List<ENumber> enumbers;
-        private readonly List<CNumber> cnumbers;
-        private readonly List<CENumber> cenumbers;
+        private const int N = 10000;
+
+        private readonly List<Struct> structs;
+        private readonly List<StructWithSpecializedEquals> structWithSpecializedEqualses;
+        private readonly List<StructEquatable> structEquatables;
+
+        private readonly List<Class> classes;
+        private readonly List<ClassWithSpecializedEquals> classWithSpecializedEqualses;
+        private readonly List<ClassEquatable> classEquatables;
 
         public Test()
         {
-            numbers = Enumerable.Range(0, N).Select(v => new Number { Value = v }).ToList();
-            enumbers = Enumerable.Range(0, N).Select(v => new ENumber { Value = v }).ToList();
-            cnumbers = Enumerable.Range(0, N).Select(v => new CNumber { Value = v }).ToList();
-            cenumbers = Enumerable.Range(0, N).Select(v => new CENumber { Value = v }).ToList();
+            structs = Enumerable.Range(0, N).Select(v => new Struct { Value = v }).ToList();
+            structWithSpecializedEqualses = Enumerable.Range(0, N).Select(v => new StructWithSpecializedEquals { Value = v }).ToList();
+            structEquatables = Enumerable.Range(0, N).Select(v => new StructEquatable { Value = v }).ToList();
+
+            classes = Enumerable.Range(0, N).Select(v => new Class { Value = v }).ToList();
+            classWithSpecializedEqualses = Enumerable.Range(0, N).Select(v => new ClassWithSpecializedEquals { Value = v }).ToList();
+            classEquatables = Enumerable.Range(0, N).Select(v => new ClassEquatable { Value = v }).ToList();
         }
 
         [Benchmark]
-        public bool SearchNumbers()
+        public bool SearchStruct()
         {
-            return numbers.Contains(numbers.Last());
+            return structs.Contains(structs.Last());
         }
 
         [Benchmark]
-        public bool SearchENumbers()
+        public bool SearchStructWithSpecializedEquals()
         {
-            return enumbers.Contains(enumbers.Last());
+            return structWithSpecializedEqualses.Contains(structWithSpecializedEqualses.Last());
         }
 
         [Benchmark]
-        public bool SearchCNumbers()
+        public bool SearchStructEquatable()
         {
-            return cnumbers.Contains(cnumbers.Last());
+            return structEquatables.Contains(structEquatables.Last());
         }
 
         [Benchmark]
-        public bool SearchCENumbers()
+        public bool SearchClass()
         {
-            return cenumbers.Contains(cenumbers.Last());
+            return classes.Contains(classes.Last());
+        }
+
+        [Benchmark]
+        public bool SearchClassWithSpecializedEquals()
+        {
+            return classWithSpecializedEqualses.Contains(classWithSpecializedEqualses.Last());
+        }
+
+        [Benchmark]
+        public bool SearchClassEquatable()
+        {
+            return classEquatables.Contains(classEquatables.Last());
         }
     }
 
@@ -81,7 +132,7 @@ namespace Boxing
     {
         static void Main(string[] args)
         {
-            var summary = BenchmarkRunner.Run<Test>();
+            BenchmarkRunner.Run<Test>();
         }
     }
 }
