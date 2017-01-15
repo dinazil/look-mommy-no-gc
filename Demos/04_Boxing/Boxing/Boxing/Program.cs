@@ -17,8 +17,7 @@ namespace Boxing
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(obj, null)) return false;
-            if (obj.GetType() != typeof(StructWithSpecializedEquals))
+            if (!(obj is StructWithSpecializedEquals))
             {
                 return false;
             }
@@ -42,19 +41,27 @@ namespace Boxing
         public int Value { get; set; }
     }
 
+    class ClassWithReferenceSpecializedEquals
+    {
+        public int Value { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return ReferenceEquals(this, obj);
+        }
+    }
+
     class ClassWithSpecializedEquals
     {
         public int Value { get; set; }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(obj, null)) return false;
-            if (obj.GetType() != typeof(ClassWithSpecializedEquals))
-            {
+            ClassWithSpecializedEquals other = obj as ClassWithSpecializedEquals;
+            if (other == null)
                 return false;
-            }
 
-            return ((ClassWithSpecializedEquals)obj).Value == Value;
+            return other.Value == Value;
         }
     }
 
@@ -77,6 +84,7 @@ namespace Boxing
         private readonly List<StructEquatable> structEquatables;
 
         private readonly List<Class> classes;
+        private readonly List<ClassWithReferenceSpecializedEquals> classWithReferenceSpecializedEqualses;
         private readonly List<ClassWithSpecializedEquals> classWithSpecializedEqualses;
         private readonly List<ClassEquatable> classEquatables;
 
@@ -87,6 +95,7 @@ namespace Boxing
             structEquatables = Enumerable.Range(0, N).Select(v => new StructEquatable { Value = v }).ToList();
 
             classes = Enumerable.Range(0, N).Select(v => new Class { Value = v }).ToList();
+            classWithReferenceSpecializedEqualses = Enumerable.Range(0, N).Select(v => new ClassWithReferenceSpecializedEquals { Value = v }).ToList();
             classWithSpecializedEqualses = Enumerable.Range(0, N).Select(v => new ClassWithSpecializedEquals { Value = v }).ToList();
             classEquatables = Enumerable.Range(0, N).Select(v => new ClassEquatable { Value = v }).ToList();
         }
@@ -113,6 +122,12 @@ namespace Boxing
         public bool SearchClass()
         {
             return classes.Contains(classes.Last());
+        }
+
+        [Benchmark]
+        public bool SearchClassWithReferenceSpecializedEquals()
+        {
+            return classWithReferenceSpecializedEqualses.Contains(classWithReferenceSpecializedEqualses.Last());
         }
 
         [Benchmark]
