@@ -1,17 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JackCompiler", "Demos\02_StaticAnalysis\JackCompiler.csproj", "{53C3A583-DCEF-4768-8B59-0B472A30B5B4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryLeak", "Demos\03_MemoryProfiler\perf-perfview-netleak\src\MemoryLeak\MemoryLeak.csproj", "{13D85188-EE07-408C-A47F-9D5F2AF4240D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boxing", "Demos\04_Boxing\Boxing\Boxing\Boxing.csproj", "{EC71FB5F-9D15-4B89-854B-16CF3DFEC27A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_Boxing", "Demos\04_Boxing\Boxing\Boxing\01_Boxing.csproj", "{EC71FB5F-9D15-4B89-854B-16CF3DFEC27A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TasksAndState", "Demos\05_Lambdas\TasksAndState\TasksAndState\TasksAndState.csproj", "{DEB97841-E560-4EB8-99FA-BFA2A467DA4B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_TasksAndState", "Demos\05_Lambdas\TasksAndState\TasksAndState\02_TasksAndState.csproj", "{DEB97841-E560-4EB8-99FA-BFA2A467DA4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LINQ", "Demos\06_LINQ\LINQ\LINQ\LINQ.csproj", "{33EE3D5F-AE65-491E-BB08-574F0785558F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03_LINQ", "Demos\06_LINQ\LINQ\LINQ\03_LINQ.csproj", "{33EE3D5F-AE65-491E-BB08-574F0785558F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllocBenchmark", "Demos\07_Allocations\AllocBenchmark\AllocBenchmark.csproj", "{A55F8FD5-3613-4B7A-BE11-3986B4EE9AF0}"
 EndProject
