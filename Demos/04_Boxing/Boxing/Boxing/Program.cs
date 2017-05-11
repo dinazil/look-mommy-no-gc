@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 
@@ -35,6 +36,8 @@ namespace Boxing
             return Value == other.Value;
         }
     }
+
+    #region class
 
     class Class
     {
@@ -75,6 +78,8 @@ namespace Boxing
         }
     }
 
+    #endregion 
+
     public class Test
     {
         private const int N = 10000;
@@ -83,10 +88,12 @@ namespace Boxing
         private readonly List<StructWithSpecializedEquals> structWithSpecializedEqualses;
         private readonly List<StructEquatable> structEquatables;
 
+        #region class
         private readonly List<Class> classes;
         private readonly List<ClassWithReferenceSpecializedEquals> classWithReferenceSpecializedEqualses;
         private readonly List<ClassWithSpecializedEquals> classWithSpecializedEqualses;
         private readonly List<ClassEquatable> classEquatables;
+        #endregion
 
         public Test()
         {
@@ -94,10 +101,12 @@ namespace Boxing
             structWithSpecializedEqualses = Enumerable.Range(0, N).Select(v => new StructWithSpecializedEquals { Value = v }).ToList();
             structEquatables = Enumerable.Range(0, N).Select(v => new StructEquatable { Value = v }).ToList();
 
+            #region class
             classes = Enumerable.Range(0, N).Select(v => new Class { Value = v }).ToList();
             classWithReferenceSpecializedEqualses = Enumerable.Range(0, N).Select(v => new ClassWithReferenceSpecializedEquals { Value = v }).ToList();
             classWithSpecializedEqualses = Enumerable.Range(0, N).Select(v => new ClassWithSpecializedEquals { Value = v }).ToList();
             classEquatables = Enumerable.Range(0, N).Select(v => new ClassEquatable { Value = v }).ToList();
+            #endregion
         }
 
         [Benchmark]
@@ -117,6 +126,8 @@ namespace Boxing
         {
             return structEquatables.Contains(structEquatables.Last());
         }
+
+        #region class
 
         [Benchmark]
         public bool SearchClass()
@@ -141,6 +152,8 @@ namespace Boxing
         {
             return classEquatables.Contains(classEquatables.Last());
         }
+
+        #endregion
     }
 
     class Program
