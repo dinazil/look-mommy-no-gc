@@ -1,4 +1,4 @@
-# ndc-london-2017-no-gc
-Demos for "Look Mommy, No GC!" talk at NDC London 2017
+Demos for "Look Mommy, No GC!" talk.
 
-Slides can be found here: https://www.dropbox.com/s/qo478xzezrozbf6/Look%20Mommy%2C%20No%20GC%21.pdf?dl=0
+Slides:
+NDC London 2017: https://www.slideshare.net/dinazil/look-mommy-no-gc
